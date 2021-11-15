@@ -1,0 +1,8 @@
+name: elastic
+channels:
+  - defaults
+dependencies:
+  - flask=1.1.2
+  - jinja2=3.0.1
+  - pip:
+    - elasticsearch==7.15.2
