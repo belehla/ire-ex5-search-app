@@ -1,0 +1,34 @@
+:root {
+  --dark: #222222;
+  --light: #EEEEEE; 
+  --bg: #FDFDFD;
+}
+
+body{
+    font-family: "Calibri";
+    font-weight: lighter;
+    color: var(--dark);
+    background-color: var(--bg);
+    margin: 0px;
+    
+    /* move footer to the bottom */
+    display: flex; 
+    flex-direction: column;
+    height: 100%;
+}
+
+.content{
+    margin: 20px 10px 20px;
+}
+
+.btn-light{
+    background-color: var(--light);
+    border-color: var(--light);
+}
+
+footer{
+    background-color: var(--light);
+    text-align: center;
+    padding: 8px 0px 4px 0px;
+    margin-top: auto; 
+}

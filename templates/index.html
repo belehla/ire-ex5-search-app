@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>Search</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="content">
+                <h1>Search Application based on Elasticsearch</h1>
+
+                <form action="/" method="post">
+                    <div class="form-group col-md-6">
+                        <label>Keywords:</label>
+                        <input type="text" name="keywords" class="form-control"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Query-Type:</label><br>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-light" for="type1">
+                                <input type="radio" id="type1" name="type" value="1"> 1
+                            </label>
+                            <label class="btn btn-light" for="type2">
+                                <input type="radio" id="type2" name="type" value="2"> 2
+                            </label>
+                            <label class="btn btn-light" for="type3">
+                                <input type="radio" id="type3" name="type" value="3"> 3
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <button type="submit" class="btn btn-secondary">Search</button>
+                    </div>
+                </form>
+
+                <table class="table">
+                    {% for article in articles %}
+                        <tr>
+                            <td><img src="{{article['image-src']}}"/></td>
+                            <td>
+                                <h2>{{article.title}}</h2>
+
+                                {% if article.authors!="null" %}
+                                    <small>{{article.authors}} | </small>
+                                {% endif %}
+                                {% if article.location!="null" %}
+                                    <small>Location: {{article.location}} | </small>
+                                {% endif %}
+                                {% if article.date!="null" %}
+                                    <small>{{article.date}}</small>
+                                {% endif %}
+                                {% if article.updated!="null" %}
+                                    <small> | Updated: {{article.updated}}</small>
+                                {% endif %}
+
+                                <br/>
+                                <button class="btn btn-secondary btn-sm mt-2" type="button" data-toggle="collapse" data-target="#collapse_article_{{loop.index}}">
+                                    Show article
+                                </button>
+                                <div class="collapse" id="collapse_article_{{loop.index}}">
+                                    <p>{{article.text}}</p>
+                                    <i>{{article.author_addit_info}}<i>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+
+        <footer>Exercise 5 | Group C </footer>
+
+    </body>
+</html>
