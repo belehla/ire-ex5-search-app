@@ -24,16 +24,16 @@
                         <input type="text" name="keywords" class="form-control"/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Query-Type:</label><br>
+                        <label>Query-Logic:</label><br>
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-light" for="type1">
-                                <input type="radio" id="type1" name="type" value="1"> 1
+                            <label class="btn btn-light" for="tfidf">
+                                <input type="radio" id="tfidf" name="logic" value="tfidf" checked> tf*idf
                             </label>
-                            <label class="btn btn-light" for="type2">
-                                <input type="radio" id="type2" name="type" value="2"> 2
+                            <label class="btn btn-light" for="bool">
+                                <input type="radio" id="bool" name="logic" value="boolean"> Boolean
                             </label>
-                            <label class="btn btn-light" for="type3">
-                                <input type="radio" id="type3" name="type" value="3"> 3
+                            <label class="btn btn-light" for="lm">
+                                <input type="radio" id="lm" name="logic" value="lm"> LMDirichlet
                             </label>
                         </div>
                     </div>
@@ -42,24 +42,28 @@
                     </div>
                 </form>
 
+                {% if output_info %}
+                    <div>
+                        <p>Found <b>{{output_info.count}}</b> articles
+                        with the query <b>{{output_info.keywords}}</b>
+                        and the query logic <b>{{output_info.query_logic}}</b>
+                        </p>
+                    </div>
+                {% endif %}
+
                 <table class="table">
                     {% for article in articles %}
                         <tr>
-                            <td><img src="{{article['image-src']}}"/></td>
+                            <td><img src="{{article['thumbnail-src']}}"/></td>
                             <td>
-                                <h2>{{article.title}}</h2>
+                                {% if article.Article %}
+                                    <h2>{{article.Article}}</h2>
+                                {% elif article.title %}
+                                    <h2>{{article.title}}</h2>
+                                {% endif %}
 
-                                {% if article.authors!="null" %}
-                                    <small>{{article.authors}} | </small>
-                                {% endif %}
-                                {% if article.location!="null" %}
-                                    <small>Location: {{article.location}} | </small>
-                                {% endif %}
                                 {% if article.date!="null" %}
                                     <small>{{article.date}}</small>
-                                {% endif %}
-                                {% if article.updated!="null" %}
-                                    <small> | Updated: {{article.updated}}</small>
                                 {% endif %}
 
                                 <br/>
@@ -67,8 +71,12 @@
                                     Show article
                                 </button>
                                 <div class="collapse" id="collapse_article_{{loop.index}}">
-                                    <p>{{article.text}}</p>
-                                    <i>{{article.author_addit_info}}<i>
+                                    {% if article.wtext %}
+                                        <p>{{article.wtext}}</p>
+                                    {% elif article.text %}
+                                        <p>{{article.text}}</p>
+                                    {% endif %}
+
                                 </div>
                             </td>
                         </tr>
@@ -78,7 +86,7 @@
             </div>
         </div>
 
-        <footer>Exercise 5 | Group C </footer>
+        <footer>Exercise 5 | Group C | Gro&szlig;auer, Orellan, Hammerle</footer>
 
     </body>
 </html>

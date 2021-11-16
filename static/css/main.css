@@ -26,6 +26,10 @@ body{
     border-color: var(--light);
 }
 
+b{
+    font-weight: bold;
+}
+
 footer{
     background-color: var(--light);
     text-align: center;
